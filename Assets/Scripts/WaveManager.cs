@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class waveManager : MonoBehaviour
+public class WaveManager : MonoBehaviour
 {
     public static bool StopAllShooting = false;
 
@@ -14,9 +14,16 @@ public class waveManager : MonoBehaviour
     public float groupDuration = 6f;     // how long each group stays active
     public float delayBetweenGroups = 0.3f;
 
-    private List<GameObject> enemies = new List<GameObject>();
+    private static List<GameObject> enemies = new List<GameObject>();
 
     private void Start()
+    {
+        RegisterEnemies();
+
+        StartCoroutine(CycleGroupsForever());
+    }
+
+    private void RegisterEnemies()
     {
         StopAllShooting = false;
 
@@ -35,26 +42,27 @@ public class waveManager : MonoBehaviour
         // Turn all off initially
         for (int i = 0; i < enemies.Count; i++)
             enemies[i].SetActive(false);
-
-        StartCoroutine(CycleGroupsForever());
     }
 
     private IEnumerator CycleGroupsForever()
     {
         int index = 0;
 
-        while (!StopAllShooting && enemies.Count > 0)
+        while (!StopAllShooting)
         {
-            // Enable next group
-            List<GameObject> current = new List<GameObject>();
+            if (enemies.Count == 0)
+            {
+                Debug.Log("[WaveManager] No enemies remaining. Stopping shooting cycle.");
+                yield break;
+            }
 
-            for (int i = 0; i < groupSize; i++)
+            // Enable next group
+
+            for (int i = 0; i < groupSize && i < enemies.Count; i++)
             {
                 GameObject e = enemies[index];
                 e.SetActive(true);
-                current.Add(e);
-
-                index = (index + 1) % enemies.Count; // wrap around forever
+                index = (index + 1) % enemies.Count;
             }
 
             // Keep them active & shooting for groupDuration
@@ -66,8 +74,8 @@ public class waveManager : MonoBehaviour
             }
 
             // Disable current group
-            for (int i = 0; i < current.Count; i++)
-                current[i].SetActive(false);
+            for (int i = 0; i < enemies.Count; i++)
+                enemies[i].SetActive(false);
 
             // small gap before next group
             float gap = 0f;
@@ -86,5 +94,13 @@ public class waveManager : MonoBehaviour
     public void StopShootingNow()
     {
         StopAllShooting = true;
+    }
+
+    public static void RemoveEnemy(GameObject enemy)
+    {
+        if (enemies.Contains(enemy))
+        {
+            enemies.Remove(enemy);
+        }
     }
 }

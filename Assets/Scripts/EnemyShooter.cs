@@ -19,7 +19,7 @@ public class EnemyShooter : MonoBehaviour
 
     private void Update()
     {
-        if (waveManager.StopAllShooting) return;
+        if (WaveManager.StopAllShooting) return;
         if (!isActiveAndEnabled) return;
 
         if (player == null || bulletPrefab == null) return;
@@ -41,5 +41,10 @@ public class EnemyShooter : MonoBehaviour
         GameObject b = Instantiate(bulletPrefab, firePos, Quaternion.LookRotation(dir));
         var rb = b.GetComponent<Rigidbody>();
         if (rb != null) rb.linearVelocity = dir * bulletSpeed;
+    }
+
+    private void OnDestroy()
+    {
+        WaveManager.RemoveEnemy(gameObject);
     }
 }

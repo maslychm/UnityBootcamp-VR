@@ -7,7 +7,7 @@ public class FinishLineTrigger : MonoBehaviour
     private bool triggered = false;
 
     // Optional: if you have a manager reference, drag it in. Otherwise we’ll just use the static flag.
-    public waveManager waveManager;
+    public WaveManager waveManager;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class FinishLineTrigger : MonoBehaviour
 
         // Stop all enemy shooting
         if (waveManager != null) waveManager.StopShootingNow();
-        else waveManager.StopAllShooting = true;
+        else WaveManager.StopAllShooting = true;
 
         // Stop ALL other audios except this one
         StopAllOtherAudioSources();
