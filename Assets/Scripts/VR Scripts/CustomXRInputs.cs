@@ -39,7 +39,6 @@ public class CustomXRInputs : MonoBehaviour
 
         if (toggleShield.action.WasPressedThisFrame())
         {
-            //Debug.Log("Action button pressed!");
             if (shieldObject != null)
             {
                 shieldObject.SetActive(!shieldObject.activeSelf);

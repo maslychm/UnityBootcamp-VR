@@ -60,6 +60,7 @@ public class WaveManager : MonoBehaviour
 
             for (int i = 0; i < groupSize && i < enemies.Count; i++)
             {
+                if (enemies.Count == 0) break;
                 GameObject e = enemies[index];
                 e.SetActive(true);
                 index = (index + 1) % enemies.Count;

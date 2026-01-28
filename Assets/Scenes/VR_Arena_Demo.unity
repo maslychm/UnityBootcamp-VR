@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 230725719}
   - component: {fileID: 230725723}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
