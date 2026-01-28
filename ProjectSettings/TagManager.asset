@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - EnemyBullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
+  - IgnoreDefault
+  - FinishLine
   - 
   - 
   - 

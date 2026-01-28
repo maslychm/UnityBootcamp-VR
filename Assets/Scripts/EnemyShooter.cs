@@ -39,8 +39,17 @@ public class EnemyShooter : MonoBehaviour
         Vector3 dir = (targetPos - firePos).normalized;
 
         GameObject b = Instantiate(bulletPrefab, firePos, Quaternion.LookRotation(dir));
-        var rb = b.GetComponent<Rigidbody>();
-        if (rb != null) rb.linearVelocity = dir * bulletSpeed;
+
+        if (b.TryGetComponent(out EnemyBullet enemyBullet))
+        {
+            enemyBullet.Launch(dir * bulletSpeed);
+            return;
+        }
+    }
+
+    public void TakeDamage()
+    {
+        Destroy(gameObject);
     }
 
     private void OnDestroy()
